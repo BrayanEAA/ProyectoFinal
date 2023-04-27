@@ -32,7 +32,7 @@ namespace ProyectoFinal.DAO
                 cliente.NombreCliente = ParametroCliente.NombreCliente;
                 cliente.Telefono = ParametroCliente.Telefono;
                 cliente.Email = ParametroCliente.Email;
-                cliente.Direccion= ParametroCliente.Direccion;
+                cliente.Direccion = ParametroCliente.Direccion;
                 db.Add(cliente);
                 db.SaveChanges();
 

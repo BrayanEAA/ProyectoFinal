@@ -1,4 +1,5 @@
-﻿using ProyectoFinal.Models;
+﻿
+using ProyectoFinal.Models;
 using ProyectoFinal.DAO;
 
 Crudfloristeria CrudFloristeria = new Crudfloristeria();
@@ -31,9 +32,9 @@ switch (Menu)
         }
         break;
 
-        case 2:
+    case 2:
         int seguir = 1;
-        
+
         {
             Console.WriteLine("usted es un cliente por favor ingrese sus tados para continuar: ");
             Console.WriteLine("ingrese su Nombre: ");
@@ -50,8 +51,8 @@ switch (Menu)
             var compra = Convert.ToInt32(Console.ReadLine());
             if (compra == 1)
             {
-              while (seguir == 1)
-                    Console.WriteLine("usted esta realizando una compra : ");
+
+                Console.WriteLine("usted esta realizando una compra : ");
                 Console.WriteLine("Lista de productos");
                 var ListarProductos = CrudFloristeria.ListarProductos();
                 foreach (var iteracionproducto in ListarProductos)
@@ -62,7 +63,7 @@ switch (Menu)
 
                 Console.WriteLine("pulsa 1 para realizar una compra: ");
                 Console.WriteLine("pulsa 0 para salir");
-                seguir = Convert.ToInt32(Console.ReadLine());
+
             }
         }
         break;

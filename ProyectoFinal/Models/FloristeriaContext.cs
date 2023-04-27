@@ -33,7 +33,6 @@ public partial class FloristeriaContext : DbContext
         {
             entity.HasKey(e => e.IdCliente).HasName("PK__Clientes__D59466422ED4FE03");
 
-            entity.Property(e => e.IdCliente).ValueGeneratedNever();
             entity.Property(e => e.Direccion)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -52,7 +51,6 @@ public partial class FloristeriaContext : DbContext
         {
             entity.HasKey(e => e.IdDetalle).HasName("PK__Detalles__E43646A5509E0554");
 
-            entity.Property(e => e.IdDetalle).ValueGeneratedNever();
             entity.Property(e => e.TotalDetalle).HasColumnType("decimal(10, 2)");
 
             entity.HasOne(d => d.IdProductoNavigation).WithMany(p => p.Detallesventa)
@@ -70,7 +68,6 @@ public partial class FloristeriaContext : DbContext
         {
             entity.HasKey(e => e.IdProducto).HasName("PK__Producto__09889210D3F543A2");
 
-            entity.Property(e => e.IdProducto).ValueGeneratedNever();
             entity.Property(e => e.Descripcion)
                 .HasMaxLength(200)
                 .IsUnicode(false);
@@ -84,7 +81,6 @@ public partial class FloristeriaContext : DbContext
         {
             entity.HasKey(e => e.IdVenta).HasName("PK__Pedidos__9D335DC31C8AAB20");
 
-            entity.Property(e => e.IdVenta).ValueGeneratedNever();
             entity.Property(e => e.FechaPedido).HasColumnType("date");
             entity.Property(e => e.Total).HasColumnType("decimal(10, 2)");
 
