@@ -9,7 +9,7 @@ public partial class Venta
 
     public int IdCliente { get; set; }
 
-    public DateTime FechaPedido { get; set; }
+    public string? FechaPedido { get; set; }
 
     public decimal Total { get; set; }
 

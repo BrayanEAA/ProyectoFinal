@@ -5,6 +5,8 @@ using ProyectoFinal.DAO;
 Crudfloristeria CrudFloristeria = new Crudfloristeria();
 Producto producto = new Producto();
 Cliente cliente = new Cliente();
+Venta venta = new Venta();
+Detallesventum Detallesventa = new Detallesventum();
 
 Console.WriteLine("bienvenidos a la floristeria Petalo ");
 Console.WriteLine("si uested es un trabajador de la empresa ingrese 1 y si es un cliente ingrese 2 ");
@@ -51,21 +53,43 @@ switch (Menu)
             var compra = Convert.ToInt32(Console.ReadLine());
             if (compra == 1)
             {
+                bool continuar = true;
+                while (continuar)
 
-                Console.WriteLine("usted esta realizando una compra : ");
+                    Console.WriteLine("Usted está realizando una compra:");
                 Console.WriteLine("Lista de productos");
-                var ListarProductos = CrudFloristeria.ListarProductos();
-                foreach (var iteracionproducto in ListarProductos)
+
+                var productos = CrudFloristeria.ListarProductos();
+
+                foreach (var iteracionProducto in productos)
                 {
-                    Console.WriteLine($"ID {iteracionproducto.IdProducto},Nombre del producto {iteracionproducto.NombreProducto},precio del producto {iteracionproducto.Precio}, descripcion del producto {iteracionproducto.Descripcion}");
+                    Console.WriteLine($"ID ID: {iteracionProducto.IdProducto}:, Nombre: {iteracionProducto.NombreProducto.PadRight(25)}, Precio: ${iteracionProducto.Precio.ToString("0.00").PadRight(10)},  descripcion: {iteracionProducto.Descripcion}");
                 }
+                Console.WriteLine("ingrese el ID del producto: ");
+                Detallesventa.IdProducto = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("ingrese la cantidad: ");
+                Detallesventa.Cantidad = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("ingrese la fecha");
+                venta.FechaPedido = Console.ReadLine();
+                
+                Console.WriteLine($"su total es {Detallesventa.TotalDetalle}");
 
 
-                Console.WriteLine("pulsa 1 para realizar una compra: ");
+                Crudfloristeria.CalcularTotal(Detallesventa);
+
+
+                Console.WriteLine("pulsa S para realizar otra compra:  ");
                 Console.WriteLine("pulsa 0 para salir");
-
+                Console.WriteLine("desea continuar? /n presione S para si y N para No");
+                var cont = Console.ReadLine();
+                if (cont.Equals("N"))
+                {
+                    continuar = false;
+                }
             }
         }
         break;
 }
+
+
 

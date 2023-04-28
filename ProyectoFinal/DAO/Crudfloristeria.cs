@@ -55,5 +55,39 @@ namespace ProyectoFinal.DAO
             }
         }
 
+        public void AgregarVenta(Venta ParametroVenta )
+        {
+            using (FloristeriaContext db = new FloristeriaContext())
+            {
+                Venta venta = new Venta();
+                venta.FechaPedido = ParametroVenta.FechaPedido;
+                venta.IdCliente = ParametroVenta.IdCliente;
+                db.Add(venta);
+                db.SaveChanges();
+
+                foreach (var detalle in ParametroVenta.Detallesventa)
+                {
+                    Detallesventum Detallesventa = new Detallesventum();
+                    Detallesventa.IdVenta = detalle.IdVenta;
+                    Detallesventa.IdProducto = detalle.IdProducto;
+                    Detallesventa.Cantidad = detalle.Cantidad;
+                    Detallesventa.TotalDetalle = detalle.TotalDetalle;
+                    db.Add(Detallesventa);
+                }
+                db.SaveChanges();
+            }
+        }
+        public decimal CalcularTotal(Venta venta, Producto producto1)
+        {
+            decimal total = 0;
+            foreach (var detalle in venta.Detallesventa)
+            {
+                total += detalle.Cantidad * producto1.Precio;
+            }
+            return total;
+        }
+
+
     }
+        
 }
