@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace ProyectoFinal.DAO
 {
@@ -43,51 +44,47 @@ namespace ProyectoFinal.DAO
             using (FloristeriaContext db = new FloristeriaContext())
             { return db.Productos.ToList(); }
         }
-        public void RealizarVenta(Venta ParametroVenta)
-        {
-            using (FloristeriaContext db = new FloristeriaContext())
+         
+        
+            public void AgregarVenta(int clienteId, string fecha, decimal total)
             {
-                Venta venta = new Venta();
-                venta.FechaPedido = ParametroVenta.FechaPedido;
-                db.Add(venta);
-                db.SaveChanges();
-
-            }
-        }
-
-        public void AgregarVenta(Venta ParametroVenta )
-        {
-            using (FloristeriaContext db = new FloristeriaContext())
-            {
-                Venta venta = new Venta();
-                venta.FechaPedido = ParametroVenta.FechaPedido;
-                venta.IdCliente = ParametroVenta.IdCliente;
-                db.Add(venta);
-                db.SaveChanges();
-
-                foreach (var detalle in ParametroVenta.Detallesventa)
+                using (var db = new FloristeriaContext())
                 {
-                    Detallesventum Detallesventa = new Detallesventum();
-                    Detallesventa.IdVenta = detalle.IdVenta;
-                    Detallesventa.IdProducto = detalle.IdProducto;
-                    Detallesventa.Cantidad = detalle.Cantidad;
-                    Detallesventa.TotalDetalle = detalle.TotalDetalle;
-                    db.Add(Detallesventa);
+                    var venta = new Venta { IdCliente = clienteId, FechaPedido = fecha , Total = total };
+                    db.Ventas.Add(venta);
+                    db.SaveChanges();
                 }
+            }
+        public List<Venta> ObtenerVentas()
+        {
+            using (var db = new FloristeriaContext())
+            {
+                return db.Ventas.ToList();
+            }
+        }
+        public void AgregarDetalleVenta(int ventaId, int productoId, int cantidad, decimal totaldetalle)
+        {
+            using (var db = new FloristeriaContext())
+            {
+                var detalleVenta = new Detallesventum { IdVenta = ventaId, IdProducto = productoId, Cantidad = cantidad, TotalDetalle = totaldetalle };
+                db.Detallesventa.Add(detalleVenta);
                 db.SaveChanges();
             }
         }
-        public decimal CalcularTotal(Venta venta, Producto producto1)
+        public decimal CalcularTotalVenta(int ventaId)
         {
-            decimal total = 0;
-            foreach (var detalle in venta.Detallesventa)
+            using (var db = new FloristeriaContext())
             {
-                total += detalle.Cantidad * producto1.Precio;
+                var detallesVenta = db.Detallesventa.Include(d => d.IdProductoNavigation).Where(d => d.IdVenta == ventaId).ToList();
+                decimal total = 0;
+                foreach (var detalleVenta in detallesVenta)
+                {
+                    total += detalleVenta.Cantidad * detalleVenta.IdProductoNavigation.Precio;
+                }
+                return total;
             }
-            return total;
         }
 
 
     }
-        
 }
