@@ -71,14 +71,13 @@ switch (Menu)
                 Detallesventa.Cantidad = Convert.ToInt32(Console.ReadLine());
                 Console.WriteLine("ingrese la fecha");
                 venta.FechaPedido = Console.ReadLine();
-                
-                Console.WriteLine($"su total es {Detallesventa.TotalDetalle}");
 
 
-                Crudfloristeria.CalcularTotal(Detallesventa);
+              
 
 
-                Console.WriteLine("pulsa S para realizar otra compra:  ");
+
+            Console.WriteLine("pulsa S para realizar otra compra:  ");
                 Console.WriteLine("pulsa 0 para salir");
                 Console.WriteLine("desea continuar? /n presione S para si y N para No");
                 var cont = Console.ReadLine();
