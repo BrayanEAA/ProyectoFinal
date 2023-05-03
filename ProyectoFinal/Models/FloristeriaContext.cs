@@ -81,7 +81,7 @@ public partial class FloristeriaContext : DbContext
         {
             entity.HasKey(e => e.IdVenta).HasName("PK__Pedidos__9D335DC31C8AAB20");
 
-            entity.Property(e => e.FechaPedido).HasColumnType("date");
+            entity.Property(e => e.FechaPedido).HasColumnType("string");
             entity.Property(e => e.Total).HasColumnType("decimal(10, 2)");
 
             entity.HasOne(d => d.IdClienteNavigation).WithMany(p => p.Venta)
